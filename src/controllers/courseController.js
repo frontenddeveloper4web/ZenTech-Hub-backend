@@ -20,6 +20,7 @@ const createCourse = async (req, res) => {
     const image = { url, altText };
     const courses = new courseModel({
       title,
+      image,
       content,
       autor,
       rating,
@@ -31,7 +32,9 @@ const createCourse = async (req, res) => {
       normalPrice,
     });
     await courses.save();
-    return res.status(201).json({message: "Course successfully created", success: true})
+    return res.status(201).json({message: "Course successfully created", success: true, courses})
 
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({message: "Internal server error", error: error, success: false})
+  }
 };
