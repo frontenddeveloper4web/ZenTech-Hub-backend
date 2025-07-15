@@ -38,3 +38,18 @@ const createCourse = async (req, res) => {
     return res.status(500).json({message: "Internal server error", error: error, success: false})
   }
 };
+
+
+const getCourses =  async (_req, res) => {
+    try {
+      const courses = courseModel.find({}).sort({timestamps});
+      if(!courses){
+        return res.status(401).json({message: "Courses not found", success: false});
+      };
+      return res.status(200).json({message: "Courses successfully fetched", success: true, courses});
+    } catch (error) {
+      console.log("There's an error here, please try again later")
+        return res.status(500).json({message: "Internal server error", error: error, success: false});
+    }
+};
+module.exports = {createCourse, getCourses};
